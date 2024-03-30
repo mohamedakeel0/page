@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  Color? color;
+   HomePage({ this.color,super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -9,6 +10,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return  Container(color: Colors.red,height: 30,width: 30,);
+    return  Container(color: widget.color!,height: 40,width: 30,);
   }
 }

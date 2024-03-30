@@ -23,7 +23,7 @@ class MainController extends Cubit<MainState> {
   Future<void> getPage(String page,Services services) async {
 
     if (!isClosed) {
-if(services.name== Services.NoData.name){
+if(services.name== Services.NoData.name||services.name== Services.Refresh.name){
   currentPage = 1;
 }
 
@@ -31,7 +31,7 @@ print('currentPage');
 emit(RefreshGetPageState());
     }
     final resultCategories =
-    await getPageUseCase(page).catchError((e) {
+    await getPageUseCase('$currentPage').catchError((e) {
       print('ErrorGetPageState');
       if (!isClosed) {
         currentPage = 1;
@@ -39,7 +39,7 @@ emit(RefreshGetPageState());
       }
     });
     resultCategories.fold((l) {
-
+      print('ErrorGetPageState');
       if (!isClosed) {
         currentPage = 1;
         emit(ErrorGetPageState());
@@ -50,15 +50,26 @@ emit(RefreshGetPageState());
 
       print('SuccesGetPageState');
 
-      if(services.name== Services.Loading.name||services.name== Services.Refresh.name){
+      if(services.name== Services.Loading.name){
         date.data!.data!.forEach((element) {
           pageEntity!.data!.data!.add(element);
         });
 
       }else if(services.name== Services.Intial.name||services.name== Services.NoData.name){
         pageEntity = date;
+      }if(pageEntity!=null){
+        if(pageEntity!.data!.currentPage==null){
+          currentPage=1;}else{
+          currentPage++;
+        }
+      }else if(services.name== Services.Refresh.name){
+        pageEntity = date;
       }
-      currentPage++;
+      if(currentPage==1){
+        pageEntity=null;
+        pageEntity!.data!.data!.clear();
+      }
+
 print(pageEntity!.data!.data!.length);
       if (!isClosed) {
 

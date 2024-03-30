@@ -19,7 +19,7 @@ class MainRemoteDataSource extends BaseMainRemoteDataSource {
   Future<PageEntity> getPage(String page) async{
     final response = await DioHelper.getdata(
 
-        url: 'requests',query: {  "page":'2',},token: null
+        url: 'requests',query: {  "page":page,},token: null
      );
 
 

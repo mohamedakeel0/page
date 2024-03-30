@@ -26,13 +26,21 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) =>
-    sl<MainController>()..getPage('2',Services.Intial)),
+    sl<MainController>()..getPage('1',Services.Intial)),
 
 
       ],
       child: BlocConsumer<MainController,MainState>(listener: (context, state) {
 
       },builder: (context, state) {
+        List colors=[
+          Colors.blue,
+          Colors.yellowAccent,
+          Colors.red,
+          Colors.black,
+
+        ];
+
        var cubic = MainController.get(context);
         return MaterialApp(
           title: 'Flutter Demo',
@@ -84,7 +92,7 @@ class MyApp extends StatelessWidget {
                         children:cubic.pageEntity!.data!.data!.map<Widget>(
                               (item) {
 
-                            return HomePage();
+                            return HomePage(color: colors[cubic.currentPage],);
                           },
                         ).toList(),
                       ),
@@ -97,6 +105,7 @@ class MyApp extends StatelessWidget {
     );
 
   }
+
 }
 
 
